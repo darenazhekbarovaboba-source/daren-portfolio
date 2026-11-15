@@ -138,8 +138,15 @@
     }
     echo("opening " + id);
     el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    if (!el.hasAttribute("tabindex")) {
+      el.setAttribute("tabindex", "-1");
+    }
+    el.focus({ preventScroll: true });
     if (history.replaceState) {
       history.replaceState(null, "", "#" + id);
+    }
+    if (typeof setCurrent === "function" && navSectionIds && navSectionIds[id]) {
+      setCurrent(id);
     }
   }
 
@@ -220,6 +227,12 @@
         setNavOpen(false);
       }
     });
+
+    document.addEventListener("click", function (event) {
+      if (!nav.classList.contains("is-open")) return;
+      if (nav.contains(event.target) || toggle.contains(event.target)) return;
+      setNavOpen(false);
+    });
   }
 
   var navLinks = document.querySelectorAll('.site-nav a[href^="#"]');
@@ -234,7 +247,7 @@
 
   function setCurrent(id) {
     navLinks.forEach(function (link) {
-      if (link.getAttribute("href") === "#" + id) {
+      if (id && link.getAttribute("href") === "#" + id) {
         link.setAttribute("aria-current", "page");
       } else {
         link.removeAttribute("aria-current");
@@ -242,15 +255,26 @@
     });
   }
 
+  var navSectionIds = { projects: true, skills: true, contact: true };
+
   if ("IntersectionObserver" in window && sections.length) {
+    var intersecting = Object.create(null);
     var observer = new IntersectionObserver(
       function (entries) {
-        var visible = entries
-          .filter(function (entry) { return entry.isIntersecting; })
-          .sort(function (a, b) { return b.intersectionRatio - a.intersectionRatio; });
-        if (visible[0]) {
-          setCurrent(visible[0].target.id);
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            intersecting[entry.target.id] = entry.intersectionRatio;
+          } else {
+            delete intersecting[entry.target.id];
+          }
+        });
+        var ids = Object.keys(intersecting);
+        if (!ids.length) {
+          setCurrent(null);
+          return;
         }
+        ids.sort(function (a, b) { return intersecting[b] - intersecting[a]; });
+        setCurrent(ids[0]);
       },
       { rootMargin: "-30% 0px -55% 0px", threshold: [0, 0.25, 0.5, 1] }
     );
@@ -267,8 +291,15 @@
       if (!target || target.hidden) return;
       event.preventDefault();
       target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      if (!target.hasAttribute("tabindex")) {
+        target.setAttribute("tabindex", "-1");
+      }
+      target.focus({ preventScroll: true });
       if (history.replaceState) {
         history.replaceState(null, "", "#" + id);
+      }
+      if (navSectionIds[id]) {
+        setCurrent(id);
       }
     });
   });
@@ -363,21 +394,44 @@
     }
   }
 
+  function showProjectsError(message) {
+    var note = document.getElementById("projects-note");
+    if (!note) return;
+    note.hidden = false;
+    note.textContent = message;
+  }
+
   fetch(REPOS_URL)
     .then(function (response) {
-      if (!response.ok) throw new Error("request failed");
+      if (!response.ok) {
+        var err = new Error("request failed");
+        err.status = response.status;
+        throw err;
+      }
       return response.json();
     })
     .then(function (data) {
       if (!Array.isArray(data)) throw new Error("unexpected response");
-      var repos = data.filter(function (repo) {
-        return repo && !repo.fork && repo.name !== OWN_REPO;
+      var ownRepos = data.filter(function (repo) {
+        return repo && !repo.fork;
       });
-      if (!repos.length) return;
-      renderRepos(repos);
+      var repos = ownRepos.filter(function (repo) {
+        return repo.name !== OWN_REPO;
+      });
+      if (!repos.length) {
+        var grid = document.getElementById("project-grid");
+        var note = document.getElementById("projects-note");
+        if (grid) grid.textContent = "";
+        if (note) {
+          note.hidden = false;
+          note.textContent = "no public projects yet";
+        }
+      } else {
+        renderRepos(repos);
+      }
       var seen = Object.create(null);
       var languages = [];
-      repos.forEach(function (repo) {
+      ownRepos.forEach(function (repo) {
         if (repo.language && !seen[repo.language]) {
           seen[repo.language] = true;
           languages.push(repo.language);
@@ -385,7 +439,14 @@
       });
       if (languages.length) renderSkills(languages);
     })
-    .catch(function () {
-      // Keep the placeholder cards and skills list.
+    .catch(function (err) {
+      var status = err && err.status;
+      if (status === 403 || status === 429) {
+        showProjectsError("Could not load projects: GitHub rate limit reached. Try again in a little while.");
+      } else if (status) {
+        showProjectsError("Could not load projects: GitHub returned an error. Try again later.");
+      } else {
+        showProjectsError("Could not load projects: network error. Check your connection and try again.");
+      }
     });
 })();
