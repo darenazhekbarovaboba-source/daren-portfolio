@@ -148,6 +148,12 @@ main,
   padding: 0 1.25rem;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
 .brand {
   display: flex;
   align-items: baseline;
@@ -171,6 +177,22 @@ main,
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.16em;
+}
+
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--muted);
+  text-decoration: none;
+  border-radius: var(--radius);
+}
+
+.github-link:hover,
+.github-link:focus-visible {
+  color: var(--accent);
 }
 
 .site-nav ul {
@@ -242,10 +264,19 @@ main {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.55rem;
-  margin: 0 0 1.25rem;
+  margin: 0 0 1rem;
   color: var(--muted);
   font-size: 0.75rem;
   letter-spacing: 0.14em;
+}
+
+.hero-title {
+  margin: 0 0 1.35rem;
+  font-size: clamp(2.4rem, 7vw, 4.4rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  font-weight: 700;
+  color: var(--text);
 }
 
 .led {
@@ -301,12 +332,15 @@ main {
 
 .terminal-body {
   position: relative;
-  min-height: 16.5rem;
-  padding: 1.15rem 1.2rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 16rem;
+  padding: 1.15rem 1.2rem 1.15rem;
 }
 
 .typed-output,
-.terminal-static {
+.terminal-static,
+.terminal-log {
   margin: 0;
   font: inherit;
   font-size: 0.95rem;
@@ -316,14 +350,79 @@ main {
   word-break: break-word;
 }
 
-.cursor {
-  display: inline-block;
-  width: 0.65ch;
-  height: 1.1em;
-  margin-left: 1px;
-  vertical-align: text-bottom;
-  background: var(--accent);
-  animation: blink 1s step-end infinite;
+.terminal-log {
+  white-space: normal;
+}
+
+.terminal-log:not(:empty) {
+  margin-top: 0.35rem;
+}
+
+.log-line {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.log-line + .log-line {
+  margin-top: 0.15rem;
+}
+
+.cmd-link {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.cmd-link:hover {
+  color: #b8fff0;
+}
+
+.terminal-static {
+  display: block;
+}
+
+html.js .terminal-static {
+  display: none;
+}
+
+.terminal-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: auto;
+  padding-top: 0.85rem;
+}
+
+.terminal-input-row[hidden] {
+  display: none;
+}
+
+.terminal-input-row .prompt {
+  margin: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.terminal-input-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  font-size: 0.95rem;
+  caret-color: var(--accent);
+}
+
+.terminal-input-row input:focus {
+  outline: none;
 }
 
 .hero-cta-row {
@@ -337,6 +436,7 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.45rem;
   padding: 0.7rem 1.1rem;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius);
@@ -375,6 +475,10 @@ main {
   border-top: 1px solid var(--line);
 }
 
+.section[hidden] {
+  display: none;
+}
+
 .section-kicker {
   margin-bottom: 0.35rem;
   color: var(--accent);
@@ -389,16 +493,11 @@ main {
   text-transform: uppercase;
 }
 
-.placeholder-note {
-  display: inline-block;
+.operator-note {
   margin: 0 0 1.15rem;
-  padding: 0.2rem 0.55rem;
-  border: 1px solid rgba(255, 176, 32, 0.45);
-  border-radius: 3px;
-  background: var(--amber-dim);
-  color: var(--amber);
-  font-size: 0.8rem;
-  letter-spacing: 0.04em;
+  color: var(--muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
 }
 
 .panel {
@@ -462,17 +561,25 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
   margin-bottom: 0.85rem;
 }
 
 .badge {
   padding: 0.15rem 0.4rem;
-  border: 1px solid rgba(255, 176, 32, 0.5);
-  background: var(--amber-dim);
-  color: var(--amber);
+  border: 1px solid var(--line-strong);
+  background: var(--accent-dim);
+  color: var(--accent);
   font-size: 0.65rem;
   letter-spacing: 0.12em;
   font-weight: 700;
+}
+
+.badge.is-placeholder {
+  border-color: var(--line);
+  background: transparent;
+  color: var(--muted);
+  font-weight: 500;
 }
 
 .card-index {
@@ -484,6 +591,7 @@ main {
   margin: 0 0 0.5rem;
   font-size: 1.1rem;
   letter-spacing: 0.04em;
+  overflow-wrap: anywhere;
 }
 
 .project-card p {
@@ -492,13 +600,29 @@ main {
   font-size: 0.92rem;
 }
 
+.card-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1rem;
+  margin: 0.9rem 0 0;
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.card-link,
 .card-link-soon {
   margin-top: auto !important;
   padding-top: 1rem;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.06em;
+}
+
+.card-link-soon {
   color: var(--muted);
+  text-transform: uppercase;
   font-size: 0.75rem !important;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .skill-list {
@@ -512,12 +636,21 @@ main {
 
 .skill-list li {
   padding: 0.45rem 0.75rem;
-  border: 1px dashed rgba(255, 176, 32, 0.45);
   border-radius: var(--radius);
-  background: var(--amber-dim);
-  color: var(--amber);
   font-size: 0.85rem;
   letter-spacing: 0.06em;
+}
+
+.skill-list.is-fallback li {
+  border: 1px dashed var(--line);
+  background: var(--bg-panel);
+  color: var(--muted);
+}
+
+.skill-list.is-live li {
+  border: 1px solid var(--line-strong);
+  background: var(--bg-panel);
+  color: var(--accent);
 }
 
 .contact-panel {
@@ -525,6 +658,13 @@ main {
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
+}
+
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
 }
 
 .mail-link {
@@ -601,8 +741,7 @@ main {
     scroll-behavior: auto;
   }
 
-  .led,
-  .cursor {
+  .led {
     animation: none;
   }
 

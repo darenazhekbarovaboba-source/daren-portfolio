@@ -3,11 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Personal portfolio of Daren Azhekbarov. About, projects, and skills sections are placeholders until real details are added.">
+  <meta name="description" content="Personal portfolio of Daren Azhekbarov.">
   <meta name="theme-color" content="#05080c">
   <title>Daren Azhekbarov — Portfolio</title>
+  <link rel="canonical" href="https://darenazhekbarovaboba-source.github.io/daren-portfolio/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Daren Azhekbarov — Portfolio">
+  <meta property="og:description" content="Personal portfolio of Daren Azhekbarov.">
+  <meta property="og:url" content="https://darenazhekbarovaboba-source.github.io/daren-portfolio/">
+  <meta property="og:image" content="https://darenazhekbarovaboba-source.github.io/daren-portfolio/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Daren Azhekbarov portfolio hero with a GROK OS terminal">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Daren Azhekbarov — Portfolio">
+  <meta name="twitter:description" content="Personal portfolio of Daren Azhekbarov.">
+  <meta name="twitter:image" content="https://darenazhekbarovaboba-source.github.io/daren-portfolio/og-image.png">
+  <meta name="twitter:image:alt" content="Daren Azhekbarov portfolio hero with a GROK OS terminal">
+
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2305080c'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='monospace' font-size='14' fill='%2300ffc8'%3EDA%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -22,17 +40,24 @@
         <span class="brand-name">GROK OS</span>
         <span class="brand-sub">PORTFOLIO</span>
       </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
-        <span class="nav-toggle-bars" aria-hidden="true"></span>
-      </button>
-      <nav id="site-nav" class="site-nav" aria-label="Primary">
-        <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
+      <div class="header-actions">
+        <nav id="site-nav" class="site-nav" aria-label="Primary">
+          <ul>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <a class="github-link" href="https://github.com/darenazhekbarovaboba-source" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 16 16" width="22" height="22" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          <span class="sr-only">GitHub profile</span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -45,7 +70,7 @@
         <span>MODULE: PORTFOLIO</span>
       </div>
 
-      <h1 id="hero-heading" class="visually-hidden">Daren Azhekbarov</h1>
+      <h1 id="hero-heading" class="hero-title">Daren Azhekbarov</h1>
 
       <div class="terminal" role="region" aria-label="Command-center welcome terminal">
         <div class="terminal-bar">
@@ -56,12 +81,12 @@
         </div>
         <div class="terminal-body">
           <pre id="typed-output" class="typed-output"></pre>
+          <div id="terminal-log" class="terminal-log" aria-live="polite"></div>
           <p class="sr-only">
             GROK OS command center. Operator: Daren Azhekbarov. Portfolio module is online.
-            Available sections: about, projects, skills, and contact.
+            Available commands: help, about, projects, skills, contact, github, and clear.
           </p>
-          <p class="terminal-static" hidden>
-GROK OS // COMMAND CENTER
+          <pre class="terminal-static">GROK OS // COMMAND CENTER
 --------------------------------
 SYSTEM ...... ONLINE
 MODULE ...... PORTFOLIO
@@ -72,9 +97,11 @@ STATUS ...... READY
 Daren Azhekbarov
 
 &gt; help
-Available sections: about · projects · skills · contact
-          </p>
-          <span id="cursor" class="cursor" aria-hidden="true"></span>
+Available commands: help · about · <a href="#projects">projects</a> · <a href="#skills">skills</a> · <a href="#contact">contact</a> · <a href="https://github.com/darenazhekbarovaboba-source" target="_blank" rel="noopener noreferrer">github</a> · clear</pre>
+          <form id="terminal-form" class="terminal-input-row" autocomplete="off" hidden>
+            <label for="terminal-input" class="prompt">&gt;</label>
+            <input id="terminal-input" name="command" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Terminal command">
+          </form>
         </div>
       </div>
 
@@ -84,24 +111,17 @@ Available sections: about · projects · skills · contact
       </p>
     </section>
 
-    <section id="about" class="section" aria-labelledby="about-heading">
+    <section id="about" class="section" aria-labelledby="about-heading" hidden>
       <div class="section-kicker">01 // IDENTITY</div>
       <h2 id="about-heading">About</h2>
-      <p class="placeholder-note">Placeholder — no biography has been added yet.</p>
-      <div class="panel">
-        <p>
-          This About section is a placeholder. A short, accurate biography for
-          Daren Azhekbarov can go here when one is ready. Nothing in this
-          block is a real claim about work, location, or background.
-        </p>
-      </div>
+      <p class="operator-note">// awaiting input from operator</p>
     </section>
 
     <section id="projects" class="section" aria-labelledby="projects-heading">
       <div class="section-kicker">02 // ARCHIVE</div>
       <h2 id="projects-heading">Projects</h2>
-      <p class="placeholder-note">Placeholder — these three cards are stand-ins, not real projects.</p>
-      <ul class="project-grid">
+      <p id="projects-note" class="operator-note">// awaiting input from operator</p>
+      <ul id="project-grid" class="project-grid">
         <li class="project-card">
           <div class="card-meta">
             <span class="badge">PLACEHOLDER</span>
@@ -135,8 +155,8 @@ Available sections: about · projects · skills · contact
     <section id="skills" class="section" aria-labelledby="skills-heading">
       <div class="section-kicker">03 // MODULES</div>
       <h2 id="skills-heading">Skills</h2>
-      <p class="placeholder-note">Placeholder — replace these labels with real skills.</p>
-      <ul class="skill-list">
+      <p id="skills-note" class="operator-note">// awaiting input from operator</p>
+      <ul id="skill-list" class="skill-list is-fallback">
         <li>Skill 01 <span class="sr-only">(placeholder)</span></li>
         <li>Skill 02 <span class="sr-only">(placeholder)</span></li>
         <li>Skill 03 <span class="sr-only">(placeholder)</span></li>
@@ -151,7 +171,15 @@ Available sections: about · projects · skills · contact
       <h2 id="contact-heading">Contact</h2>
       <div class="panel contact-panel">
         <p>The best way to reach Daren Azhekbarov is by email.</p>
-        <a class="btn btn-primary mail-link" href="mailto:darenazhekbarovaboba@gmail.com">darenazhekbarovaboba@gmail.com</a>
+        <div class="contact-actions">
+          <a class="btn btn-primary mail-link" href="mailto:darenazhekbarovaboba@gmail.com">darenazhekbarovaboba@gmail.com</a>
+          <a class="btn btn-ghost github-contact" href="https://github.com/darenazhekbarovaboba-source" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+        </div>
       </div>
     </section>
   </main>
