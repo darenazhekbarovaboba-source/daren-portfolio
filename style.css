@@ -346,8 +346,10 @@ main {
 .cmd-link {
   display: inline-flex;
   align-items: center;
+  min-width: 44px;
   min-height: 44px;
   padding: 0 0.2em;
+  justify-content: center;
   border: 0;
   background: none;
   color: var(--accent);
@@ -640,6 +642,9 @@ html.js .terminal-static {
 @media (max-width: 700px) {
   .mail-link {
     width: 100%;
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+    font-size: 0.85rem;
   }
 
   .contact-actions {
