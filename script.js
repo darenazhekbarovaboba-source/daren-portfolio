@@ -8,13 +8,8 @@
   var OWN_REPO = "daren-portfolio";
 
   var bootLines = [
-    "GROK OS // COMMAND CENTER",
+    "Daren Azhekbarov — Portfolio",
     "--------------------------------",
-    "SYSTEM ...... ONLINE",
-    "MODULE ...... PORTFOLIO",
-    "OPERATOR .... DAREN AZHEKBAROV",
-    "STATUS ...... READY",
-    "",
     "> whoami",
     "Daren Azhekbarov",
     "",
